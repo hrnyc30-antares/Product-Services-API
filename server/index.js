@@ -1,32 +1,27 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
 const cors = require('cors');
+const mongoose = require('mongoose')
 const initOptions = {
   error(error, e) {
-      if (e.cn) {
-          console.log('CN:', e.cn);
-          console.log('EVENT:', error.message || error);
-      }
+    if (e.cn) {
+      console.log('CN:', e.cn);
+      console.log('EVENT:', error.message || error);
+    }
   }
 };
 const pgp = require('pg-promise')(initOptions)
 
-let retries = 5
+mongoose.connect("mongodb://mongo:27017/products-api", { useNewUrlParser: true })
+.then(() => console.log('connected to mongo'))
+.catch((err) => console.log(err))
 
-while (retries !== 0){
-  try{
-    pgp('postgresql://postgres:postgres@db:5432/products-api')
-    .connect()
-    .then(() => console.log('connected to db'))
-    .catch((error) => console.log('error message --> ', error))
-    break
-  } catch (err){
-    console.log(err)
-    retries--
-    console.log(`there are ${retries} left`)
-  }
-}
+pgp('postgresql://postgres:postgres@pg:5432/products-api')
+.connect()
+.then(() => console.log('connected to postgres'))
+.catch((error) => {
+  console.log('error message --> ', error)
+})
 
 
 app.use(cors());

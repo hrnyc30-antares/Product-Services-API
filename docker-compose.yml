@@ -1,18 +1,41 @@
 version: "3.7"
 services:
-    db:
+    pg:
         image: postgres
         environment: 
-            POSTGRES_PASSWORD: postgres
             POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
             POSTGRES_DB: products-api
         volumes:
             - .pgdata:/var/lib/postgresql/data
         ports:
             - "5432:5432"
+        restart: unless-stopped
     web:
         image: productsapi
         depends_on: 
-            - db
+            - pg
         ports: 
             - "3001:3001"
+    pgadmin:
+        image: dpage/pgadmin4
+        depends_on: 
+            - pg 
+        ports: 
+            - "5555:80"
+        environment: 
+            PGADMIN_DEFAULT_EMAIL: jose@admin.org
+            PGADMIN_DEFAULT_PASSWORD: postgres
+        restart: unless-stopped
+    
+    mongo:
+        image: mongo:latest
+        restart: always
+        environment: 
+            - MONGO_INITDB_DATABASE=productsapi
+            - MONGO_INITDB_ROOT_USERNAME=mongo
+            - MONGO_INITDB_ROOT_PASSWORD=password
+        ports:
+            - "27017:27017"
+        volumes:
+            - .mongodata:/data/db    
