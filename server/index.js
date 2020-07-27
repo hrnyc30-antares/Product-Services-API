@@ -28,9 +28,9 @@ app.get('/products/:id', (req, res) => {
   const id = req.params.id;
   db.any(`select * from products_info where id = ${id}`)
     .then((data) => {
-      db.any(`select * from features where id = ${id}`)
+      db.any(`select * from features where product_id = ${id}`)
         .then((featureData) => {
-          featureData.forEach((el) => delete el.id);
+          featureData.forEach((el) => delete el.product_id);
           data[0]['features'] = featureData;
           res.status(200).send(JSON.parse(JSON.stringify(data[0])));
         })
@@ -102,10 +102,10 @@ app.get('/products/:id/styles', (req, res) => {
 app.get('/products/:id/related', (req, res) => {
   const id = req.params.id;
   let results = [];
-  db.any(`SELECT * FROM related WHERE current_id = ${id}`)
+  db.any(`SELECT * FROM related WHERE current_product_id = ${id}`)
     .then((data) => {
       data.forEach((el) => {
-        results.push(el.related_id);
+        results.push(el.related_product_id);
       });
       res.status(200).send(JSON.parse(JSON.stringify(results)));
     })
