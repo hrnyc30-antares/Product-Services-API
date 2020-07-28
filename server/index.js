@@ -10,8 +10,12 @@ const initOptions = {
   },
 };
 const pgp = require('pg-promise')(initOptions);
-
-let db = pgp('postgresql://postgres:postgres@pg:5432/products-api');
+let db;
+pgp('postgresql://postgres:postgres@pg:5432/products-api')
+.connect()
+.then(client => db = client)
+.then(()=> console.log('Connected to DB'))
+.catch((err) => console.log('error', err))
 
 app.use(cors());
 
