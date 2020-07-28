@@ -116,8 +116,8 @@ router.get('/products/:id/related', (req, res) => {
     });
 });
 
-router.get('/loaderio-281e42259ce039bd9304966fab4be05a', (req,res) => {
-    res.sendStatus(200).send('loaderio-281e42259ce039bd9304966fab4be05a');
+router.get('/loaderio-281e42259ce039bd9304966fab4be05a/', (req,res) => {
+    res.sendStatus(200).sendFile('./home/ubuntu/Products-API/server/loaderio-281e42259ce039bd9304966fab4be05a.txt')
 })
 
 
