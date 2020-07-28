@@ -116,6 +116,9 @@ router.get('/products/:id/related', (req, res) => {
     });
 });
 
+router.get('/loaderio-281e42259ce039bd9304966fab4be05a', (req,res) => {
+    res.sendStatus(200).send('loaderio-281e42259ce039bd9304966fab4be05a');
+})
 
 
 module.exports = router;
