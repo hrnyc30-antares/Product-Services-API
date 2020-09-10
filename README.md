@@ -4,7 +4,6 @@ Server API for Quasar's Project Greenfield E-commerce application. Created with 
 
 
 ## Tech Stack
----
 - Node.Js
 - Express
 - Docker
