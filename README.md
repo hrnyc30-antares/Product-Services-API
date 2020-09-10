@@ -1,5 +1,5 @@
 # Product Service's API 
----
+
 Server API for Quasar's Project Greenfield E-commerce application. Created with Node.Js, PostgreSQL, pgAdmin and containerized using docker compose. Application system designed for accessibility, scalability, and performance.
 
 
